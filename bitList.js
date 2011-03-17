@@ -26,7 +26,20 @@ bitList = function(){
 		// return the count
 		return count;
 	}
-	
+	// Method returns the value of entire list.
+	listValue = function(){
+		// Keep track of sum
+		var sum = 0;
+		// Iterate through the list and return it's sum
+		for(var key in list)
+		{
+			// Make sure that the key is not from a prototype chain
+			if(list.hasOwnProperty(key))
+			{ sum += list[key]; }
+		}
+		// Return Sum
+		return sum;
+	}
 	// Inserts a new element into the list
 	get = function(element){
 		// Make sure we already have this element
@@ -47,16 +60,38 @@ bitList = function(){
 		var aID = 0, bID = 0;
 		
 		// Check to see if A is number or array
-		if( a.length )
-		{ for(var i=0; i<a.length; i++){ aID += (typeof a[i]==="string") ? get(a[i]):get(a[i].toString()); } }
+		if( a && a.length )
+		{ 
+			// Iterate through array
+			for(var i=0; i<a.length; i++)
+			{ 
+				// Get Element
+				var el = a[i].toString();
+				// Make sure a[i] is in fact in the list
+				aID += ( list[el] ) ? get(el):0; 
+			
+			} 
+		}
 		else if( typeof a === "number" )
 		{ aID = a; }
 		
 		// Check to see if B is number or array
-		if( b.length )
-		{ for(var i=0; i<b.length; i++){ bID += (typeof b[i]==="string") ? get(b[i]):get(b[i].toString()); } }
+		if( b && b.length )
+		{ 
+			// Iterate through array
+			for(var i=0; i<b.length; i++)
+			{ 
+				// Get Element
+				var el = b[i].toString();
+				// Make sure b[i] is in fact in the list
+				bID += ( list[el] ) ? get(el):0;
+			}
+		}
 		else if( typeof b === "number" )
 		{ bID = b; }
+		// This means b was never passed, so substitute with entire list
+		else
+		{ bID = listValue() }
 		
 		return { a:aID, b:bID };
 	}
@@ -65,7 +100,7 @@ bitList = function(){
 	// = Public Interface for the class =
 	// ==================================
 	return {
-		// matchAny : Returns the number of matches between both groups, groupIDs or mixture of the two.
+		// matchAny : Returns [number] the number of matches between groups, groupIDs or mixture of the two.
 		matchAny : function( a, b ){
 			// Translate the params
 			var p = translate(a,b);
@@ -73,7 +108,7 @@ bitList = function(){
 			// Convert bit operator result to binary, strip the zeros and count the 1s
 			return ( p.a & p.b ).toString(2).replace(/0/g,'').length;
 		},
-		// matchAll :  Returns [boolean] whether or not both groups, groupIDs or 
+		// matchAll :  Returns [boolean] whether or not groups, groupIDs or 
 		// mixture of the two match exactly the same
 		matchAll : function( a, b ){
 			// Translate our parameters
@@ -101,26 +136,19 @@ bitList = function(){
 			for(var i=0; i<groupAry.length; i++)
 			{
 				var el = groupAry[i];
-				sum += (typeof el==="string") ? get(el):get(el.toString());
+				sum += get(el.toString());
 			}
 			// Return our groupID
 			return sum;
 		},
 		// getListID: returns the groupID/value of the entire list
 		getListID : function(){
-			// Keep track of sum
-			var sum = 0;
-			// Iterate through the list and return it's sum
-			for(var key in list)
-			{
-				// Make sure that the key is not from a prototype chain
-				if(list.hasOwnProperty(key))
-				{ sum += list[key]; }
-			}
-			// Return Sum
-			return sum;
+			// Relay the private function
+			return listValue();
 		},
+		// ----------------------------------------------------------
+		// Temporary functions: Used for debugging only
 		getList : function(){ return list; },
-		trans : translate,
+		trans : function(a,b){ translate(a,b); },
 	};
 };
