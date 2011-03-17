@@ -5,7 +5,7 @@
 //  Created by Arlo Carreon on 2011-03-16.
 //  Copyright 2011 arlocarreon.com All rights reserved.
 // 
-bitlist = function(){
+bitList = function(){
 	
 	// =================================
 	// = Private Variables and Methods =
@@ -32,8 +32,8 @@ bitlist = function(){
 		// Make sure we already have this element
 		if( !list[element] )
 		{
-			// Insert element and it's value: 2^(length+1)
-			list[element] = Math.pow(2,length()+1);
+			// Insert element and it's value: 2^(length)
+			list[element] = Math.pow(2,length());
 		}
 		
 		// return it's value
@@ -44,7 +44,7 @@ bitlist = function(){
 	// Accepts arrays of labels or numbers
 	translate = function( a, b ){
 		// Local vars
-		var aID, bID = 0;
+		var aID = 0, bID = 0;
 		
 		// Check to see if A is number or array
 		if( a.length )
@@ -69,8 +69,9 @@ bitlist = function(){
 		matchAny : function( a, b ){
 			// Translate the params
 			var p = translate(a,b);
-			// Return comparison
-			return (p.a & p.b);
+			// Return number of matches comparison
+			// Convert bit operator result to binary, strip the zeros and count the 1s
+			return ( p.a & p.b ).toString(2).replace(/0/g,'').length;
 		},
 		// matchAll :  Returns [boolean] whether or not both groups, groupIDs or 
 		// mixture of the two match exactly the same
@@ -78,11 +79,11 @@ bitlist = function(){
 			// Translate our parameters
 			var p = translate(a,b);
 			// Return our boolean
-			return (pa===p.b);
+			return (p.a===p.b);
 		},
 		// matchNone : Returns [boolean] whether or not there are exactly ZERO matches between 
 		// groups, groupIDs or mixture of the two.
-		matchNone : function(){
+		matchNone : function(a,b){
 			// Translate our parameters
 			var p = translate(a,b);
 			// return our boolean
@@ -118,6 +119,8 @@ bitlist = function(){
 			}
 			// Return Sum
 			return sum;
-		}
+		},
+		getList : function(){ return list; },
+		trans : translate,
 	};
 };
