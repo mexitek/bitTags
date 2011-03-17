@@ -48,13 +48,13 @@ bitlist = function(){
 		
 		// Check to see if A is number or array
 		if( a.length )
-		{ for(var i=0; i<a.length; i++){ aID += (typeof a[i]==="string") get(a[i]):get(a[i].toString()); } }
+		{ for(var i=0; i<a.length; i++){ aID += (typeof a[i]==="string") ? get(a[i]):get(a[i].toString()); } }
 		else if( typeof a === "number" )
 		{ aID = a; }
 		
 		// Check to see if B is number or array
 		if( b.length )
-		{ for(var i=0; i<b.length; i++){ bID += (typeof b[i]==="string") get(b[i]):get(b[i].toString()); } }
+		{ for(var i=0; i<b.length; i++){ bID += (typeof b[i]==="string") ? get(b[i]):get(b[i].toString()); } }
 		else if( typeof b === "number" )
 		{ bID = b; }
 		
@@ -100,7 +100,7 @@ bitlist = function(){
 			for(var i=0; i<groupAry.length; i++)
 			{
 				var el = groupAry[i];
-				sum += (typeof el==="string") get(el):get(el.toString());
+				sum += (typeof el==="string") ? get(el):get(el.toString());
 			}
 			// Return our groupID
 			return sum;
