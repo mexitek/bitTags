@@ -40,10 +40,56 @@ bitlist = function(){
 		return list[element];
 	}
 	
+	// Translate 2 params into groupIDs.
+	// Accepts arrays of labels or numbers
+	translate = function( a, b ){
+		// Local vars
+		var aID, bID = 0;
+		
+		// Check to see if A is number or array
+		if( a.length )
+		{ for(var i=0; i<a.length; i++){ aID += (typeof a[i]==="string") get(a[i]):get(a[i].toString()); } }
+		else if( typeof a === "number" )
+		{ aID = a; }
+		
+		// Check to see if B is number or array
+		if( b.length )
+		{ for(var i=0; i<b.length; i++){ bID += (typeof b[i]==="string") get(b[i]):get(b[i].toString()); } }
+		else if( typeof b === "number" )
+		{ bID = b; }
+		
+		return { a:aID, b:bID };
+	}
+	
 	// ==================================
 	// = Public Interface for the class =
 	// ==================================
 	return {
+		// matchAny : Returns the number of matches between both groups, groupIDs or mixture of the two.
+		matchAny : function( a, b ){
+			// Translate the params
+			var p = translate(a,b);
+			// Return comparison
+			return (p.a & p.b);
+		},
+		// matchAll :  Returns [boolean] whether or not both groups, groupIDs or 
+		// mixture of the two match exactly the same
+		matchAll : function( a, b ){
+			// Translate our parameters
+			var p = translate(a,b);
+			// Return our boolean
+			return (pa===p.b);
+		},
+		// matchNone : Returns [boolean] whether or not there are exactly ZERO matches between 
+		// groups, groupIDs or mixture of the two.
+		matchNone : function(){
+			// Translate our parameters
+			var p = translate(a,b);
+			// return our boolean
+			return ( (p.a & p.b)===0 );
+		},
+		// getGroupID: Takes a collection (array) of tags/labels 
+		// and returns that groups value/ID
 		getGroupID : function(groupAry){
 			// Make sure we were passed an array
 			if( !groupAry.length )
@@ -58,7 +104,8 @@ bitlist = function(){
 			}
 			// Return our groupID
 			return sum;
-		}
+		},
+		// getListID: returns the groupID/value of the entire list
 		getListID : function(){
 			// Keep track of sum
 			var sum = 0;
@@ -67,9 +114,7 @@ bitlist = function(){
 			{
 				// Make sure that the key is not from a prototype chain
 				if(list.hasOwnProperty(key))
-				{
-					sum += list[key];
-				}
+				{ sum += list[key]; }
 			}
 			// Return Sum
 			return sum;
