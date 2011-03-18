@@ -67,7 +67,7 @@ for(var key in people)
      if( bl.matchAny( asianList,person[key].tags ) )
           alert(key+' is asian.');
 }
-// *** Above out puts: betty is asian. justin is asian.
+// *** Above outputs: betty is asian. justin is asian.
 
 // Find Hispanics
 var hispList = ['mexican','cuban','puerto rican','dominican','argentinian'];
@@ -77,7 +77,7 @@ for(var key in people)
      if( bl.matchAny( hispList,person[key].tags ) )
           alert(key+' is hispanic.');
 }
-// *** Above out puts: arlo is hispanic. erick is hispanic.
+// *** Above outputs: arlo is hispanic. erick is hispanic.
 
 -------------------------------------------------------------------------------
  Test Cases
