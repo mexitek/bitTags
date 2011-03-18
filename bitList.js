@@ -67,7 +67,8 @@ bitList = function(){
 			{ 
 				// Get Element
 				var el = a[i].toString();
-				// Make sure a[i] is in fact in the list
+				// Make sure a[i] is in fact in the list,
+				// if not then nothing happens
 				aID += ( list[el] ) ? get(el):0; 
 			
 			} 
@@ -84,6 +85,7 @@ bitList = function(){
 				// Get Element
 				var el = b[i].toString();
 				// Make sure b[i] is in fact in the list
+				// if not then nothing happens
 				bID += ( list[el] ) ? get(el):0;
 			}
 		}
@@ -126,7 +128,7 @@ bitList = function(){
 		},
 		// getGroupID: Takes a collection (array) of tags/labels 
 		// and returns that groups value/ID
-		getGroupID : function(groupAry){
+		getTagsID : function(groupAry){
 			// Make sure we were passed an array
 			if( !groupAry.length )
 				return 0;

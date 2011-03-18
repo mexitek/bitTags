@@ -9,13 +9,104 @@
  About
 -------------------------------------------------------------------------------
 
-Bitmasking Javascript class that allows an API to associate objects with tags/groups.
+-Bitmasking Javascript class that allows an API to associate objects with tags. 
+-Useful for filtering down a big collection of objects using multiple filters.
+-Every set of Tags generates a unique ID, these IDs are assigned to your objects.
+-Use this class to compare your object's TagIDs with another set of tags. 
+
+*Note* Tags are defined as an array of strings. e.g. ['tall','dark','handsome','male'] 
+
+Interface
+-getTagsID( <tags[]> ) 
+	-RETURNS: the TagID (number) for a set of tags.
+	-TagIDs are assigned to your objects
+	-By asking for a TagID, each tag is entered into a global list.
+-matchAny( <TagID | tags[]>, <TagID | tags[]> *optional* )
+	-RETURNS: the number of similarities in both sets of tags
+	-matches any element of set a and b.
+	-the order of these parameters does not matter.
+	-you can pass two sets of tags, two sets of TagIDs or a mixture of both.
+	-IF you only pass 1 parameter, then that parameter is compared to the entire list.
+-matchAll( <TagID | tags[]>, <TagID | tags[]> *optional* )
+	RETURNS: <boolean> whether are not both tag sets are identical.
+	-the order of these parameters does not matter.
+	-you can pass two sets of tags, two sets of TagIDs or a mixture of both.
+	-IF you only pass 1 parameter, then that parameter is compared to the entire list.
+-matchNone( <TagID | tags[]>, <TagID | tags[]> *optional* )
+	RETURNS: <boolean> whether or not NONE of a match  b.
+	-matches any element of set a and b.
+	-the order of these parameters does not matter.
+	-you can pass two sets of tags, two sets of TagIDs or a mixture of both.
+	-IF you only pass 1 parameter, then that parameter is compared to the entire list.
+	
+------------------------------------------------------------------------------
+Use Cases
+------------------------------------------------------------------------------
+// Initiate Class
+var bl = new bitList();
+
+// Local Objects
+var people = {
+	betty : new Person('betty'),
+	justin : new Person('justin'),
+	erick : new Person('erick'),
+	arlo : new Person('arlo')
+}
+
+// Assign tags
+people.betty.tags = bl.getTagsID(['tall','chinese','female']);
+people.justin.tags = bl.getTagsID(['short','vietnamese','male']);
+people.erick.tags = bl.getTagsID(['tall','dominican','male']);
+people.arlo.tags = bl.getTagsID(['tall','mexican','male']);
+
+// Find Asians
+var asianList = ['japanese','chinese','vietnamese','korean','thai'];
+for(var key in people)
+{
+     // Make our comparison
+     if( bl.matchAny( asianList,person[key].tags ) )
+          alert(key+' is asian.');
+}
+// *** Above out puts: betty is asian. justin is asian.
+
+// Find Hispanics
+var hispList = ['mexican','cuban','puerto rican','dominican','argentinian'];
+for(var key in people)
+{
+     // Make our comparison
+     if( bl.matchAny( hispList,person[key].tags ) )
+          alert(key+' is hispanic.');
+}
+// *** Above out puts: arlo is hispanic. erick is hispanic.
 
 -------------------------------------------------------------------------------
- Usage
+ Test Cases
 -------------------------------------------------------------------------------
 
-Coming Soon. 
+// Basic Test Cases
+var bl = new bitList();
+
+// Create an initial list
+bl.getTagsID(['a','b','c','d','e','f','g','h','i','j','k','l']);
+
+// Test matchAny()
+bl.matchAny( ['a','b','c','d'], ['k','l','e','b','f','a'] ); //returns: 2
+bl.matchAny( ['a','b','c','d'], ['k','c','e','b','f','a'] ); //returns: 3
+bl.matchAny( ['a','b','c','d'], ['e','f','g','h','i','j'] ); //returns: 0
+bl.matchAny( ['sunshine','b','cat','z'] );                   //returns: 1
+
+// Test matchAll()
+bl.matchAll( ['a','b','c','d'], ['a','b','c','d'] );     //returns: true
+bl.matchAll( ['a','b','c','d'], ['c','b','d','a'] );     //returns: true
+bl.matchAll( ['a','b','c','d'], ['a','e','c','d'] );     //returns: false
+bl.matchAll( ['a','b','c','d'], ['a','b','c','d','e'] ); //returns: false
+bl.matchAll( ['a','b','c','d'] );                        //returns: false
+
+// Test matchNone()
+bl.matchAll( ['a','b','c','d'], ['e','f','g','h'] );     //returns: true
+bl.matchAll( ['a','b','c','d'], ['a','b','c'] );         //returns: false
+bl.matchAll( ['a','b','c','d'], ['sunshine','b','cat','z'] ); //returns: false
+bl.matchAll( ['small','ball','3','$'] );                 //returns: true
   
 -------------------------------------------------------------------------------
  License
