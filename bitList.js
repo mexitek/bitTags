@@ -14,7 +14,7 @@ bitList = function(){
 	var list = {};
 	
 	// Method that gives us the current length of the list
-	length = function(){
+	getLength = function(){
 		var count=0;
 		// Iterate through the list and only count local attributes,
 		// not variables in the prototype chain
@@ -46,7 +46,7 @@ bitList = function(){
 		if( !list[element] )
 		{
 			// Insert element and it's value: 2^(length)
-			list[element] = Math.pow(2,length());
+			list[element] = Math.pow(2,getLength());
 		}
 		
 		// return it's value
