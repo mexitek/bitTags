@@ -1,11 +1,11 @@
 // 
-//  bitmask.js
-//  bitmask class
+//  bitTags.js
+//  bitTags class
 //  
 //  Created by Arlo Carreon on 2011-03-16.
 //  Copyright 2011 arlocarreon.com All rights reserved.
 // 
-bitList = function(){
+bitTags = function(){
 	
 	// =================================
 	// = Private Variables and Methods =
@@ -60,7 +60,9 @@ bitList = function(){
 		var aID = 0, bID = 0;
 		
 		// Check to see if A is number or array
-		if( a && a.length )
+		if( typeof a === "number" || !isNaN(a))
+		{ aID = a; }
+		else if( a && a.length )
 		{ 
 			// Iterate through array
 			for(var i=0; i<a.length; i++)
@@ -73,11 +75,11 @@ bitList = function(){
 			
 			} 
 		}
-		else if( typeof a === "number" )
-		{ aID = a; }
 		
 		// Check to see if B is number or array
-		if( b && b.length )
+		if( typeof b === "number" || !isNaN(b))
+		{ bID = b; }
+		else if( b && b.length )
 		{ 
 			// Iterate through array
 			for(var i=0; i<b.length; i++)
@@ -89,8 +91,6 @@ bitList = function(){
 				bID += ( list[el] ) ? get(el):0;
 			}
 		}
-		else if( typeof b === "number" )
-		{ bID = b; }
 		// This means b was never passed, so substitute with entire list
 		else
 		{ bID = listValue() }

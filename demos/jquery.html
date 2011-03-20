@@ -7,20 +7,88 @@
 	<title>jquery demo</title>
 	<meta name="author" content="Arlo Carreon">
 	<script src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
-	<script src="../bitList.js"></script>
+	<script src="../bitTags.js"></script>
 	<script>
+	var bt,collection;
+	// When DOM is ready, we can register all the tags into bitTags instance
 	$(document).ready(function(){
+		// Initiate a bitTags object
+		bt = new bitTags();
+		collection = $(".bitTags");
 		// Read the tags attribute from our elements
 		// Our elements contain the class "bitList"
-		$(".bitTags").foreach(function(el){
+		collection.each(function( index, el ){
+			// capture the element
+			var el = $(this);
 			// Looks for tags attribute and get a TagID for this element
-			
+			el.attr('tagid',bt.getTagsID( el.attr('tags').split(" ") ) );
+			//console.log(el);
 		});
+		// Register a listener for our menu
+		$("input[type=radio]").click(filterItems);
 		
 	});
+	// Checkbox Handler
+	function filterItems(){
+		// Capture all the boxes that are checked
+		// and save the value into array
+		var filters = [];
+		$("input[type=radio]:checked").each(function(index){
+			filters.push($(this).attr('value'));
+		});
+		// Run through all our collection of li's 
+		// and show only those that match our criteria
+		var milliseconds1 = (new Date()).getTime();
+		collection.each(function(){
+			// get element
+			var el = $(this);
+			// Check to see if we have a match
+			if( bt.matchAny( filters, el.attr('tagid') ) )
+				el.css('display','block');
+			else
+				el.css('display','none');
+		});
+		var milliseconds2 = (new Date()).getTime();
+		var bench = ("Following matched atleast one of: <strong>"+filters.join(', ')+"</strong><br/><em>Took: "+(milliseconds2-milliseconds1)+'ms</em>');
+		// output log
+		$("#log").html(bench);
+	}
 	</script>
 </head>
 <body>
-
+	<input type="radio" name="sex" value="male" />Male
+	<input type="radio" name="sex" value="female" />Female<br/>
+	<input type="radio" name="height" value="tall" />Tall
+	<input type="radio" name="height" value="short" />Short
+	<input type="radio" name="height" value="chubby" />Chubby<br/>
+	<input type="radio" name="tone" value="light" />Light
+	<input type="radio" name="tone" value="fare" />Fare
+	<input type="radio" name="tone" value="dark" />Dark<br/>
+	<input type="radio" name="looks" value="gorgeous" />Gorgeous
+	<input type="radio" name="looks" value="cute" />Cute
+	<input type="radio" name="looks" value="ugly" />Ugly<br/><br/>
+	<div id="log"></div>
+<ul>
+	<li class="bitTags" tags="tall fare ugly male">Arlo</li>
+	<li class="bitTags" tags="tall fare gorgeous male">John</li>
+	<li class="bitTags" tags="tall dark cute male">Joe</li>
+	<li class="bitTags" tags="tall dark ugly male">Robert</li>
+	<li class="bitTags" tags="tall light gorgeous male">Elvis</li>
+	<li class="bitTags" tags="tall light cute male">Erick</li>
+	
+	<li class="bitTags" tags="short dark ugly female">Beth</li>
+	<li class="bitTags" tags="short dark gorgeous female">Susan</li>
+	<li class="bitTags" tags="short fare cute female">Courtney</li>
+	<li class="bitTags" tags="short fare ugly female">Kathy</li>
+	<li class="bitTags" tags="short light gorgeous female">Amy</li>
+	<li class="bitTags" tags="short light cute female">Dianne</li>
+	
+	<li class="bitTags" tags="chubby light ugly male">Bob</li>
+	<li class="bitTags" tags="chubby light gorgeous male">Ivan</li>
+	<li class="bitTags" tags="chubby dark cute male">Richard</li>
+	<li class="bitTags" tags="chubby dark ugly female">Berta</li>
+	<li class="bitTags" tags="chubby fare gorgeous female">Claudia</li>
+	<li class="bitTags" tags="chubby fare cute female">Erika</li>
+</ul>
 </body>
 </html>
