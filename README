@@ -1,6 +1,6 @@
 
  README
- bitList.js
+ bitTags.js
  
  Created by Arlo Carreon on 2011-03-16.
  Copyright 2011 arlocarreon.com All rights reserved.
@@ -43,7 +43,7 @@ Interface
 Use Cases
 ------------------------------------------------------------------------------
 // Initiate Class
-var bl = new bitList();
+var bt = new bitTags();
 
 // Local Objects
 var people = {
@@ -54,17 +54,17 @@ var people = {
 }
 
 // Assign tags
-people.betty.tags = bl.getTagsID(['tall','chinese','female']);
-people.justin.tags = bl.getTagsID(['short','vietnamese','male']);
-people.erick.tags = bl.getTagsID(['tall','dominican','male']);
-people.arlo.tags = bl.getTagsID(['tall','mexican','male']);
+people.betty.tags = bt.getTagsID(['tall','chinese','female']);
+people.justin.tags = bt.getTagsID(['short','vietnamese','male']);
+people.erick.tags = bt.getTagsID(['tall','dominican','male']);
+people.arlo.tags = bt.getTagsID(['tall','mexican','male']);
 
 // Find Asians
 var asianList = ['japanese','chinese','vietnamese','korean','thai'];
 for(var key in people)
 {
      // Make our comparison
-     if( bl.matchAny( asianList,person[key].tags ) )
+     if( bt.matchAny( asianList,person[key].tags ) )
           alert(key+' is asian.');
 }
 // *** Above outputs: betty is asian. justin is asian.
@@ -74,7 +74,7 @@ var hispList = ['mexican','cuban','puerto rican','dominican','argentinian'];
 for(var key in people)
 {
      // Make our comparison
-     if( bl.matchAny( hispList,person[key].tags ) )
+     if( bt.matchAny( hispList,person[key].tags ) )
           alert(key+' is hispanic.');
 }
 // *** Above outputs: arlo is hispanic. erick is hispanic.
@@ -84,29 +84,29 @@ for(var key in people)
 -------------------------------------------------------------------------------
 
 // Basic Test Cases
-var bl = new bitList();
+var bl = new bitTags();
 
 // Create an initial list
-bl.getTagsID(['a','b','c','d','e','f','g','h','i','j','k','l']);
+bt.getTagsID(['a','b','c','d','e','f','g','h','i','j','k','l']);
 
 // Test matchAny()
-bl.matchAny( ['a','b','c','d'], ['k','l','e','b','f','a'] ); //returns: 2
-bl.matchAny( ['a','b','c','d'], ['k','c','e','b','f','a'] ); //returns: 3
-bl.matchAny( ['a','b','c','d'], ['e','f','g','h','i','j'] ); //returns: 0
-bl.matchAny( ['sunshine','b','cat','z'] );                   //returns: 1
+bt.matchAny( ['a','b','c','d'], ['k','l','e','b','f','a'] ); //returns: 2
+bt.matchAny( ['a','b','c','d'], ['k','c','e','b','f','a'] ); //returns: 3
+bt.matchAny( ['a','b','c','d'], ['e','f','g','h','i','j'] ); //returns: 0
+bt.matchAny( ['sunshine','b','cat','z'] );                   //returns: 1
 
 // Test matchAll()
-bl.matchAll( ['a','b','c','d'], ['a','b','c','d'] );     //returns: true
-bl.matchAll( ['a','b','c','d'], ['c','b','d','a'] );     //returns: true
-bl.matchAll( ['a','b','c','d'], ['a','e','c','d'] );     //returns: false
-bl.matchAll( ['a','b','c','d'], ['a','b','c','d','e'] ); //returns: false
-bl.matchAll( ['a','b','c','d'] );                        //returns: false
+bt.matchAll( ['a','b','c','d'], ['a','b','c','d'] );     //returns: true
+bt.matchAll( ['a','b','c','d'], ['c','b','d','a'] );     //returns: true
+bt.matchAll( ['a','b','c','d'], ['a','e','c','d'] );     //returns: false
+bt.matchAll( ['a','b','c','d'], ['a','b','c','d','e'] ); //returns: false
+bt.matchAll( ['a','b','c','d'] );                        //returns: false
 
 // Test matchNone()
-bl.matchAll( ['a','b','c','d'], ['e','f','g','h'] );     //returns: true
-bl.matchAll( ['a','b','c','d'], ['a','b','c'] );         //returns: false
-bl.matchAll( ['a','b','c','d'], ['sunshine','b','cat','z'] ); //returns: false
-bl.matchAll( ['small','ball','3','$'] );                 //returns: true
+bt.matchAll( ['a','b','c','d'], ['e','f','g','h'] );     //returns: true
+bt.matchAll( ['a','b','c','d'], ['a','b','c'] );         //returns: false
+bt.matchAll( ['a','b','c','d'], ['sunshine','b','cat','z'] ); //returns: false
+bt.matchAll( ['small','ball','3','$'] );                 //returns: true
   
 -------------------------------------------------------------------------------
  License
