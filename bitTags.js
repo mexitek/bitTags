@@ -3,7 +3,7 @@
 //  bitTags class
 //  
 //  Created by Arlo Carreon on 2011-03-16.
-//  Copyright 2011 arlocarreon.com All rights reserved.
+//  MIT License: arlo.mit-license.org
 // 
 bitTags = function(){
 	
