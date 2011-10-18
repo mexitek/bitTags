@@ -100,10 +100,10 @@ bt.matchAll( ['a','b','c','d'], ['a','b','c','d','e'] ); //returns: false
 bt.matchAll( ['a','b','c','d'] );                        //returns: false
 
 // Test matchNone()
-bt.matchAll( ['a','b','c','d'], ['e','f','g','h'] );     //returns: true
-bt.matchAll( ['a','b','c','d'], ['a','b','c'] );         //returns: false
-bt.matchAll( ['a','b','c','d'], ['sunshine','b','cat','z'] ); //returns: false
-bt.matchAll( ['small','ball','3','$'] );                 //returns: true
+bt.matchNone( ['a','b','c','d'], ['e','f','g','h'] );     //returns: true
+bt.matchNone( ['a','b','c','d'], ['a','b','c'] );         //returns: false
+bt.matchNone( ['a','b','c','d'], ['sunshine','b','cat','z'] ); //returns: false
+bt.matchNone( ['small','ball','3','$'] );                 //returns: true
 </pre>
 
 h1. License: "arlo.mit-license.org":http://arlo.mit-license.org
